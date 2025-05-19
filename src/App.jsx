@@ -1,33 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import ProductGallery from "./components/ProductGallery";
+import ProductVariants from "./components/ProductVariants";
+import DeliveryChecker from "./components/DeliveryChecker";
+import { productData } from "./data/productsData";
+import Divider from "./components/common/Divider";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedColorId, setSelectedColorId] = useState(productData.colors[0].id);
+
+  const handleColorChange = (colorId) => {
+    setSelectedColorId(colorId);
+  };
+
+  const handleSizeChange = (sizeId) => {
+    console.log("Tamanho selecionado:", sizeId);
+  };
+
+  const selectedColor = productData.colors.find(color => color.id === selectedColorId);
 
   return (
-      <section className="relative bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 text-white py-20 px-6 overflow-hidden">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-pink-300 opacity-20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-300 opacity-20 rounded-full blur-3xl animate-ping"></div>
-            <div className="relative z-10 max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-lg">
-                Bem-vindo à nossa plataforma!
-              </h1>
-              <p className="mt-6 text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
-                Aqui você encontra ferramentas poderosas, uma comunidade vibrante e tudo que precisa para crescer com estilo.
-              </p>
-              <div className="mt-10 flex justify-center gap-4">
-                <button className="px-6 py-3 rounded-xl bg-white text-purple-700 font-semibold shadow-lg hover:scale-105 transition-transform">
-                  Começar agora
-                </button>
-                <button className="px-6 py-3 rounded-xl border border-white text-white hover:bg-white hover:text-purple-700 transition-colors">
-                  Saiba mais
-                </button>
-              </div>
-            </div>
-      </section>
-  )
+    <main className="max-w-6xl mx-auto p-4 space-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div>
+          <ProductGallery images={selectedColor?.images || []} />
+        </div>
+
+        <div className="space-y-6 text-left text-black">
+          <h1 className="text-2xl font-bold">{productData.name}</h1>
+          <p className="text-xl font-semibold">R$ {productData.price.toFixed(2)}</p>
+          <p className="text-gray-600 text-sm">{productData.description}</p>
+          <Divider></Divider>
+
+          <ProductVariants
+            onColorChange={handleColorChange}
+            onSizeChange={handleSizeChange}
+          />
+
+          <DeliveryChecker />
+        </div>
+      </div>
+    </main>
+  );
 }
 
-export default App
+export default App;
