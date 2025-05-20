@@ -61,7 +61,7 @@ const DeliveryChecker = () => {
   return (
     <div className="border rounded-lg p-4 bg-gray-50">
       <SectionTitle>Verifique a entrega</SectionTitle>
-      <div className="flex space-x-2">
+      <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
         <input
           type="text"
           placeholder="00000-000"
@@ -75,10 +75,9 @@ const DeliveryChecker = () => {
           disabled={isLoading}
           className="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-black disabled:opacity-50"
         >
-          {isLoading ? "Verificando..." : "Calcular"}
+          {isLoading ? "Verificando..." : "Buscar"}
         </button>
       </div>
-
       {address && (
         <div className="mt-3 text-sm space-y-1 text-black text-left">
           <p className="font-medium">Endereço de entrega:</p>
